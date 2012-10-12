@@ -1,44 +1,115 @@
-<!DOCTYPE HTML>
+<!doctype html>
 <html>
 <head>
-<title>Cordova</title>
-<script type="text/javascript" charset="utf-8" src="cordova-2.1.0.js"></script>
- <script type="text/javascript" charset="utf-8">
-
-    // Wait for Cordova to load
-    //
-    document.addEventListener("deviceready", onDeviceReady, false);
-
-    var watchID = null;
-
-    // Cordova is ready
-    //
-    function onDeviceReady() {
-        // Throw an error if no update is received every 30 seconds
-        var options = { timeout: 30000 };
-        watchID = navigator.geolocation.watchPosition(onSuccess, onError, options);
-    }
-
-    // onSuccess Geolocation
-    //
-    function onSuccess(position) {
-        var element = document.getElementById('geolocation');
-        element.innerHTML = 'Latitude: '  + position.coords.latitude      + '<br />' +
-                            'Longitude: ' + position.coords.longitude     + '<br />' +
-                            '<hr />'      + element.innerHTML;
-    }
-
-    // onError Callback receives a PositionError object
-    //
-    function onError(error) {
-        alert('code: '    + error.code    + '\n' +
-              'message: ' + error.message + '\n');
-    }
-
-    </script>
+<meta charset="utf-8">
+<title>LungoJS 1.2</title>
+<meta name="description" content="">
+<meta name="author" content="">
+<!-- Mobile viewport optimization http://goo.gl/b9SaQ -->
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta http-equiv="cleartype" content="on">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<!-- For iPhone 4 with high-resolution Retina display: -->
+<link rel="apple-touch-icon-precomposed" sizes="114x114"
+	href="assets/images/icon@2x.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72"
+	href="assets/images/icon-72.png">
+<link rel="apple-touch-icon-precomposed" href="assets/images/icon.png">
+<link rel="apple-touch-startup-image" href="assets/images/default.png">
+<!-- Main Stylesheet -->
+<link rel="stylesheet" href="./lungo.js/lungo-1.2.css">
+<link rel="stylesheet" href="./lungo.js/lungo.theme.default.css">
 </head>
-<body>
-<h1>Hello World</h1>
-<p id="geolocation">Watching geolocation...</p>
+
+<body class="app">
+	<!--
+        First, you have to do is create a LungoJS Application instance in the file app.js.
+        ...and use a Webkit browser as Chrome or Safari.
+    -->
+	<section id="banner">
+		<header data-title="Stalker">
+			<!--             <a href="#aside-example" data-target="aside" data-icon="files" class="button onleft">Aside</a> -->
+			<a href="#about" data-target="section" class="button onright">About</a>
+		</header>
+
+		<footer class="toolbar with-labels">
+			<nav>
+				<a href="#news" class="current" data-target="article"
+					data-icon="clock" data-label="News"></a> <a href="#celebrity"
+					data-target="article" data-icon="star" data-label="Celebrity"></a>
+				<a href="#spotting" data-target="article" data-icon="pushpin"
+					data-label="Spotting"></a>
+			</nav>
+		</footer>
+		<article id="news" class="list scrollable">
+			<ul>
+				<li class="selectable "><img src="assets/images/avatars/1.jpg">
+					<div class="onright">35 mins ago</div> Andy Lau <small>was
+						shopping at Causeway Bay</small></li>
+				<li class="selectable "><img src="assets/images/avatars/1.jpg">
+					<div class="onright">50 mins ago</div> Li Bingbing <small>was
+						shopping at Causeway Bay</small></li>
+				<li class="selectable "><img src="assets/images/avatars/1.jpg">
+					<div class="onright">100 mins ago</div> Jacky Cheung <small>was
+						shopping at Causeway Bay</small></li>
+			</ul>
+		</article>
+		<article id="celebrity" class="list scrollable">
+			<div class="normal">
+				<ul>
+					<li data-icon="user"><a href="#page" data-target="section">Andy
+							Lau</a></li>
+					<li data-icon="user"><a href="#page" data-target="section">Eason
+							Chan</a></li>
+					<li data-icon="user"><a href="#page" data-target="section">Li
+							Bingbing</a></li>
+				</ul>
+			</div>
+		</article>
+		<article id="spotting">
+			<div class="indented">
+				<h1 class="title">Celebrity Spotted!</h1>
+				<p class="form">
+					<input type="text" placeholder="Celebrity Name" /> Location <label
+						class="select"><select class="custom">
+							<option value="1">One</option>
+							<option value="2">Two</option>
+							<option value="3">Three</option>
+					</select></label>
+					<textarea placeholder="Comment" rows="5"></textarea>
+					<a href="#" class="button big">Submit</a>
+				</p>
+			</div>
+		</article>
+	</section>
+
+	<section id="about">
+		<header data-back="home" data-title="About"></header>
+		<article>
+			<div class="indented">
+				<p>This is an application created during Coder Camp 2012 by</p>
+				<br />
+				<p>Dave</p>
+				<p>Copland</p>
+				<p>Peter</p>
+				<p>Max</p>
+				<p>CY</p>
+				<p>Michil</p>
+			</div>
+		</article>
+	</section>
+
+	<!-- LungoJS (Production mode) -->
+	<script src="lungo.js/lungo-1.2.js"></script>
+	<!-- LungoJS - Sandbox App -->
+	<script src="app/app.js"></script>
+	<script src="app/data.js"></script>
+	<script src="app/events.js"></script>
+	<script src="app/services.js"></script>
+	<script src="app/view.js"></script>
 </body>
 </html>
