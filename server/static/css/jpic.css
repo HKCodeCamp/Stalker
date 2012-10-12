@@ -1,0 +1,79 @@
+@font-face {
+ font-family: Bebas;
+ src: url("BEBAS___.eot") /* EOT file for IE */
+}
+@font-face {
+ font-family: Bebas;
+ src: url("BEBAS___.TTF") /* TTF file for CSS3 browsers */
+}
+body {
+padding-top: 10px;
+padding-bottom: 40px;
+}
+.hero-unit {
+background-color:#ffffff;
+color:#ffffff;
+}
+.hero-unit h1 {
+color:#333333;
+font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+text-align:center;
+text-shadow: 4px 4px 4px #808080;
+}      
+.white {
+background-color:#ffffff;
+color:#001D5F;
+}
+.white h1 {
+color:#001D5F;
+}
+.nav-pills .active a {
+background-color: #0083A5;
+color: #ffffff;
+}
+.nav-pills .active a h3 {
+color: #ffffff;
+}
+.nav-pills {
+padding-top: 45px;
+padding-bottom: 60px;
+}
+.logo {
+width:180px;
+height:70px;
+padding-left:20px;
+padding-right:20px;
+background-color:#577975;
+font-family: Bebas, sans-serif;
+color:#ffffff;
+font-size: 52px;
+font-weight:bold;
+text-align:center;
+padding-top:42px;
+margin-top:15px;
+position:relative;
+letter-spacing:2px;
+background: url('/static/img/logo.png') no-repeat center top;
+text-indent: -3000px;
+}
+.profile {
+padding-top:10px;
+}
+.hero-unit {
+padding-bottom:150px;
+margin-top:50px
+}
+.nav-pills li {
+float: right;
+}
+.nav-pills li h3 {
+color:#808080;
+}
+.login-unit {
+    margin-top: 10px;
+    padding-bottom: 15px;
+    text-align: center;
+}
+.error_message{
+color:#ff0000;
+}
