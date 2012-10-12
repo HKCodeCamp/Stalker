@@ -1,0 +1,18 @@
+@import "base";
+@import "compass";
+@import "compass/css3/text-shadow";
+
+body {
+  background: url('/images/background.png') #333 repeat !important;
+}
+
+.header {
+  @include single-text-shadow;
+  width: 100%;
+  text-align: center;
+  font-family: 'Rammetto One', cursive;
+  color: #2A5379 !important;
+  &:hover {
+    color: #6C9DCB !important;
+  }
+}
