@@ -78,3 +78,21 @@ POST /spotting/
 "comment":"Comment1",
 "user_id":"123123kjn123kj12n3"
 }
+
+Response success:
+{
+"spotting_id": "12389123j1b32jhb2jsflkansd"
+}
+
+----------
+POST /follow/
+
+{
+"username": "12312o3h12kj3123123",
+"celebrity_id": "123012jn312oiun312kj31poj3123m"
+}
+
+Response success:
+{
+"subscription_id": "123123k1jb23kj1b23kj1b2312j31"
+}

@@ -15,6 +15,7 @@ INSTALLED_APPS = (
 MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'middleware.crossdomainxhr.XsSharing',
 )
 
 TEMPLATE_CONTEXT_PROCESSORS = (
