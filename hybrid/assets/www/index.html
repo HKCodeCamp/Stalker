@@ -23,6 +23,90 @@
 <!-- Main Stylesheet -->
 <link rel="stylesheet" href="lungo.js/lungo-1.2.css">
 <link rel="stylesheet" href="lungo.js/lungo.theme.default.css">
+<script src="jquery-1.8.2.min.js"></script>
+<script type="text/javascript" charset="utf-8" src="cordova-2.1.0.js"></script>
+<script type="text/javascript" charset="utf-8">
+    
+    document.addEventListener("deviceready", onDeviceReady, false);
+
+    // Cordova is ready
+    function onDeviceReady() {
+    }
+    
+    function geolocatefunc(){ 
+    	var option={ timeout: 20000, enableHighAccuracy: true };
+        navigator.geolocation.getCurrentPosition(onSuccessGeo, onError, option);
+    }
+
+    // onSuccess Geolocation
+    function onSuccessGeo(position) {
+        //var element = document.getElementById('geolocation');
+        //element.innerHTML = 
+        
+        //alert('Latitude: ' + position.coords.latitude + 'Longitude: '+ position.coords.longitude);
+        var client_id="SODCLNPZL0F0OLYWDCCGG2R0HUMHG3QTRPN0E1AVX2QU4GPP";
+        var client_secret="X4PFOW0ZIGCO5TGFPMXUGWVUXV4YC35JVIX4351FQTFZ2BVL";
+        var url='https://api.foursquare.com/v2/venues/search?ll='+position.coords.latitude+','+position.coords.longitude+'&client_id='+client_id+'&client_secret='+client_secret;
+		alert(url);
+		var xmlhttp = new XMLHttpRequest();
+        xmlhttp.open("GET", url, true);
+        xmlhttp.onreadystatechange = function() {
+        	  if (xmlhttp.readyState == 4) {
+        	     if(xmlhttp.status == 200) {
+        	       var locationList=$.parseJSON(xmlhttp.responseText);
+        	       alert(locationList.response.groups[0].items[0].name);
+        	     }
+        	     
+        	  }
+        	};
+        xmlhttp.send();
+       	/*if(xmlhttp.status == 200) {
+       		  alert(xmlhttp.responseText);
+       		}
+       	else alert(xmlhttp.status);*/
+	}
+
+    // onError
+    function onError(error) {
+        alert('code: '+ error.code + '\n'+ 'message: ' + error.message + '\n');
+    }
+    
+	function signin(){   	
+    	
+    	var  url="http://istalkerapp.appspot.com/login/";
+    	var jsontext = {"username": "test@test.com","password": "123"};
+    	/*var login_request = new XMLHttpRequest();
+    	login_request.open( "POST", url, true );
+    	login_request.onreadystatechange = function () {
+    	    if ( login_request.readyState == 4){
+    	    	alert("status: "+login_request.status);
+    	    	if (login_request.status == 200 ) {
+    	            user = JSON.parse( login_request.responseText);
+    	            alert(user.user_id);
+    	        }
+    	    	else alert("error occured");
+    	    }
+    	};
+    	login_request.send(jsontext);*/
+    	
+    	$.ajax({
+    		type: 'POST',
+    		url: url,
+    		dataType: 'json',
+    		data: {username: "test@test.com",password: "123"},
+    		contentType:'application/json',
+    		success: function(data) {    		    
+    		    alert('Load was performed.');
+    		  },
+    		error: function(data){
+    			var err_obj=$.parseJSON(data)
+    			alert(err_obj);
+    			//alert("asd");
+    			//alert($.parseJSON(data));
+    		}
+    	});
+    }
+</script>
 </head>
 
 <body class="app">
@@ -39,7 +123,7 @@
 				<input type="password" placeholder="Your password"
 					id="txt-signup-password" value="">
 				<a href="#main" class="button blue big" data-target="section"
-					data-icon="checkmark" data-icon="user">Login</a>
+					data-icon="checkmark" data-icon="user"  onclick="signin()">Login</a>
 			</form>
 		</article>
 	</section>
