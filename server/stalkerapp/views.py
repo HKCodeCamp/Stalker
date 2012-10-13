@@ -558,7 +558,13 @@ def detail_view(request, celebrityid, userid):
     last_spottings = Spotting.all().filter('celebrity',celebrity_key).order('-date').fetch(5)
     for spotting in last_spottings:
         date_string = spotting.date.strftime("%Y-%m-%dT%H-%M-%S")
-        spottings_list.append({'spotting_id':str(spotting.key()), 'celebrity_id': str(spotting.celebrity.key()), 'celebrity_name': spotting.celebrity.name, 'location':spotting.location, 'comment':spotting.comment, 'date':date_string})
+        location_name = spotting.location_name
+        if location_name is None:
+            try:
+                location_name = _resolve_location(spotting.location)
+            except:
+                location_name = 'Cocoon'
+        spottings_list.append({'spotting_id':str(spotting.key()), 'celebrity_id': str(spotting.celebrity.key()), 'celebrity_name': spotting.celebrity.name, 'location':location_name, 'comment':spotting.comment, 'date':date_string})
     
     spottings_json = simplejson.dumps(spottings_list)
     
