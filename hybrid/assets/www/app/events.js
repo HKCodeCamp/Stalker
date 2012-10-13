@@ -5,7 +5,7 @@ App.Events = (function(lng, app, undefined) {
 	});
 
 	lng.dom('article#celebrity a').tap(function(event) {
-		App.Services.searchCelebrities($$('article#celebrity-list input').val());
+		App.Services.searchCelebrities($$('article#celebrity input').val());
 	});
 
 })(LUNGO, App);
