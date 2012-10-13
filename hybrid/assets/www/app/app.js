@@ -4,9 +4,8 @@ var App = (function(lng, undefined) {
 	lng.App.init({
 		name : 'Stalker',
 		version : '0.1',
-		sugars : [ 'map', 'pull' ],
 		resources : {
-			sections : []
+			sections : [ 'menu.html', 'main.html' ]
 		}
 	});
 

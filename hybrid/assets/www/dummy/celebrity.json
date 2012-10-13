@@ -1,6 +1,7 @@
-[
-	[name: "Andy Lau"],
-	[name: "Andy Lau"],
-	[name: "Andy Lau"],
-	[name: "Andy Lau"]
-]
+{
+  "count": 1,"celebrities": [
+    {
+      "name" : "Andy Lau"
+    }
+  ]
+}
