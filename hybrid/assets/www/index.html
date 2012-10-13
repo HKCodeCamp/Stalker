@@ -30,17 +30,30 @@
         First, you have to do is create a LungoJS Application instance in the file app.js.
         ...and use a Webkit browser as Chrome or Safari.
     -->
+	<section id="splash" data-transition="slide">
+		<article class="indented splash">
+			<img src="assets/images/logo.png" />
+			<form class="rounded">
+				<input type="text" placeholder="Your username" id="txt-signup-name"
+					value="">
+				<input type="password" placeholder="Your password"
+					id="txt-signup-password" value="">
+				<a href="#banner" class="button blue big" data-target="section"
+					data-icon="checkmark" data-icon="user">Login</a>
+			</form>
+		</article>
+	</section>
+
 	<section id="banner">
 		<header data-title="Stalker">
-			<!--             <a href="#aside-example" data-target="aside" data-icon="files" class="button onleft">Aside</a> -->
 			<a href="#about" data-target="section" class="button onright">About</a>
 		</header>
-
 		<footer class="toolbar with-labels">
 			<nav>
 				<a href="#news" class="current" data-target="article"
-					data-icon="clock" data-label="News"></a> <a href="#celebrity"
-					data-target="article" data-icon="star" data-label="Celebrity"></a>
+					data-icon="clock" data-label="News"></a>
+				<a href="#celebrity" data-target="article" data-icon="star"
+					data-label="Celebrity"></a>
 				<a href="#spotting" data-target="article" data-icon="pushpin"
 					data-label="Spotting"></a>
 			</nav>
@@ -74,8 +87,8 @@
 			<div class="indented">
 				<h1 class="title">Celebrity Spotted!</h1>
 				<p class="form">
-					<input type="text" placeholder="Celebrity Name" /> Location <label
-						class="select"><select class="custom">
+					<input type="text" placeholder="Celebrity Name" />
+					Location <label class="select"><select class="custom">
 							<option value="1">One</option>
 							<option value="2">Two</option>
 							<option value="3">Three</option>
@@ -86,6 +99,8 @@
 			</div>
 		</article>
 	</section>
+
+	<section id="celebrity">Test</section>
 
 	<section id="about">
 		<header data-back="home" data-title="About"></header>
