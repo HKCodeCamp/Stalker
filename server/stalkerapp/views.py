@@ -583,7 +583,7 @@ def spotting_view(request):
         s_location_id = json_data['location_4sqid']
         s_location_name = json_data['location_name']
         s_comment = json_data['comment']
-        s_stalker_key = json_data['userid']
+        s_stalker_key = json_data['user_id']
         
         if s_celebrity_key is None or len(s_celebrity_key) == 0 :
             celebrities = Celebrity.all().filter('name', s_celebrity_name).fetch(1)
@@ -596,11 +596,11 @@ def spotting_view(request):
 
             new_spotting = Spotting(celebrity=celebrity.key(), stalker=db.Key(s_stalker_key), location=s_location_id, location_name=s_location_name, comment=s_comment)
             new_spotting.put()
-            result = {'spotting':str(new_spotting.key())}
+            result = {'spotting':str(new_spotting.key()), 'celebrity_id':str(celebrity.key())}
         else:    
             new_spotting = Spotting(celebrity=db.Key(s_celebrity_key), stalker=db.Key(s_stalker_key), location=s_location_id, location_name=s_location_name, comment=s_comment)
             new_spotting.put()
-            result = {'spotting':str(new_spotting.key())}
+            result = {'spotting':str(new_spotting.key()), 'celebrity_id':str(celebrity.key())}
 
     return HttpResponse(simplejson.dumps(result), mimetype="text/json")
 

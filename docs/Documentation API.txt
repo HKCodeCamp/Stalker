@@ -81,7 +81,8 @@ POST /spotting/
 
 Response success:
 {
-"spotting_id": "12389123j1b32jhb2jsflkansd"
+"spotting_id": "12389123j1b32jhb2jsflkansd",
+"celebrity_id": "123hkjasdkjabsdpoanslknasd"
 }
 
 ----------
