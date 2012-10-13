@@ -1,0 +1,80 @@
+POST /login/
+
+{
+"username": "test@test.com",
+"password": "123"
+}
+
+Response success:
+{
+"user_id": "abcD-efgHjklmnopqrst124uvwxyZ"
+}
+
+Response failure: Error 500
+
+----------
+POST /register/
+{
+"username": "test@test.com",
+"password": "123"
+}
+
+Response success:
+{
+"username": "test@test.com",
+"user_id": "abcD-efgHjklmnopqrst124uvwxyZ"
+}
+
+Response failure: Error 500
+{
+"status": "failure",
+"reason": "email is already taken"
+}
+
+----------
+GET /profile/asdasdasdhasdkjbqwebqwe/
+
+Response success:
+{
+"spottings_count": 24,
+"following_count": 17,
+"celebrities": [{"name": "Jackie Chan", "celebrity_id": "1234-efgHjklmnopqrst124uvwxyZ"},{"name": "Angelina Jolie", "celebrity_id": "0000-asdkasfowqeoqnweqwe"}],
+"spottings": [{"spotting_id":"5678-efgHjklmnopqrst124uvwxyZ", "celebrity_id": "99999-efgHjklmnopqrst124uvwxyZ", "celebrity_name": "Jackie Chan", "location": "location", "comment": "Comment1", "date":"ISO-FORMATTED"}]
+}
+
+
+2012-01-25T12-12-03+08:00
+
+----------
+GET /search/Ange/
+
+Response success:
+[{
+"celebrity_id": "iur2ib-12i3123kb123oh123mpndsf",
+"celebrity_name": "Angelina Jolie"
+}]
+
+Response failure (no result):
+[]
+
+----------
+GET /detail/asdiqwekjn2kjn123123okn123/
+Response success:
+{
+"celebrity_name": "Angelina Jolie",
+"celebrity_id": "12323ih4jk3n4",
+"following": true,
+"spottings": [{"spotting_id":"5678-efgHjklmnopqrst124uvwxyZ", "celebrity_id": "99999-efgHjklmnopqrst124uvwxyZ", "celebrity_name": "Jackie Chan", "location": "location", "comment": "Comment1", "date":"ISO-FORMATTED"}]
+}
+
+----------
+POST /spotting/
+
+{
+"celebrity_id": "123o1i2n3k1j2n3k12n3k12jn312kj3n"
+"celebrity_name": "Angelina Jolie",
+"location_4sqid": "4fbf445de4b027be747589de",
+"location_name": "Cocoon",
+"comment":"Comment1",
+"user_id":"123123kjn123kj12n3"
+}

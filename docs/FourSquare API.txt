@@ -1,0 +1,32 @@
+﻿[Foursquare api]
+
+Every api request must include the folowing params:
+
+client_id=YOUR_CLIENT_ID&client_secret=YOUR_CLIENT_SECRET&v=YYYYMMDD
+____________________
+
+To search venues:
+
+(1) search by longtitudes and latitudes
+https://api.foursquare.com/v2/venues/search
+?ll=YOUR_LONGTITUDES,YOUR_LATITUDES
+
+(2)search by place (e.g. Hong Kong, Chicago, IL)
+https://api.foursquare.com/v2/venues/search
+?near=YOUR_PLACE
+
+More query parameters can be found at https://developer.foursquare.com/docs/venues/search 
+
+Response: 
+List if venue data in JSON. The fields definition can be found at https://developer.foursquare.com/docs/responses/venue
+____________________
+
+To get the venue name from a venue_id:
+
+https://api.foursquare.com/v2/venues/VENUE_ID
+
+An example: https://api.foursquare.com/v2/venues/search?ll=22.286168,114.190474&client_id=...
+
+ api page for venue info query by venue id: https://developer.foursquare.com/docs/venues/venues
+ api page for venue info query response: https://developer.foursquare.com/docs/responses/venue
+____________________
