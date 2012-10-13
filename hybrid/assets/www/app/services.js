@@ -19,7 +19,7 @@ App.Services = (function(lng, app, undefined) {
 					template : 'news-item',
 					data : response[i]
 				};
-				lng.View.Template.List.create(parameters);
+				lng.View.Template.List.append(parameters);
 			}
 		});
 	}
