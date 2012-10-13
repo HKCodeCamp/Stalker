@@ -5,8 +5,6 @@ from symbol import for_stmt
 import logging
 
 
-FETCH_LIMIT = 10000
-
 ## Classes for the Birthday App ##
 class Stalker(db.Model):
     email = db.StringProperty(required=True)
@@ -18,13 +16,14 @@ class Celebrity(db.Model):
     date = db.DateTimeProperty(auto_now_add=True)
     
 class Subscription(db.Model):
-    user = db.ReferenceProperty(Stalker)
-    celebrity = db.ReferenceProperty(Celebrity)
+    stalker = db.ReferenceProperty(Stalker, required=True)
+    celebrity = db.ReferenceProperty(Celebrity, required=True)
     date = db.DateTimeProperty(auto_now_add=True)
 
 class Spotting(db.Model):
-    celebrity = db.ReferenceProperty(Celebrity)
-    stalker = db.ReferenceProperty(Stalker)
+    celebrity = db.ReferenceProperty(Celebrity, required=True)
+    stalker = db.ReferenceProperty(Stalker, required=True)
     location = db.StringProperty(required=True)
+    location_name = db.StringProperty(required=False)
     comment = db.StringProperty(required=False)
     date = db.DateTimeProperty(auto_now_add=True)
