@@ -6,8 +6,11 @@ from django.utils import simplejson
 import logging
 from django.template.context import RequestContext
 from google.appengine.ext import db
+import urllib2, urllib
 
 FETCH_LIMIT = 10000
+
+FOURSQUARE_CRED = 'client_id=SODCLNPZL0F0OLYWDCCGG2R0HUMHG3QTRPN0E1AVX2QU4GPP&client_secret=X4PFOW0ZIGCO5TGFPMXUGWVUXV4YC35JVIX4351FQTFZ2BVL&v=20121013'
 
 # Inserts some data into the database for testing purposes.
 def build_test_view(request):
@@ -23,10 +26,10 @@ def build_test_view(request):
     subscription = Subscription(stalker=stalker.key(), celebrity=celebrity1.key())
     subscription.put()
     
-    spotting1 = Spotting(celebrity=celebrity1.key(), stalker=stalker.key(), location='abcdefghj', comment='Comment1')
+    spotting1 = Spotting(celebrity=celebrity1.key(), stalker=stalker.key(), location='4fbf445de4b027be747589de', location_name='CoCoon (Coworking Space)', comment='Comment1')
     spotting1.put()
     
-    spotting2 = Spotting(celebrity=celebrity1.key(), stalker=stalker.key(), location='klmopqrst', comment='Comment2')
+    spotting2 = Spotting(celebrity=celebrity1.key(), stalker=stalker.key(), location='4fbf445de4b027be747589de', location_name='CoCoon (Coworking Space)', comment='Comment2')
     spotting2.put()
     
     return HttpResponseServerError()
@@ -127,16 +130,16 @@ def search_view(request, name):
 # Returns the subscription key if successful.
 def follow_view(request):
     result = ''
+    if request.method == 'POST':
+        json_data = simplejson.loads(request.raw_post_data)
+        stalker_id = json_data['user_id']
+        celebrity_id = json_data['celebrity_id']
     
-    json_data = simplejson.loads(request.raw_post_data)
-    stalker_id = json_data['username']
-    celebrity_id = json_data['celebrity_id']
-    
-    celebrity_key = db.Key(celebrity_id)
-    stalker_key = db.Key(stalker_id)
-    subscription = Subscription(celebrity=celebrity_key, stalker=stalker_key)
-    subscription.put()
-    result = {'subscription_id':str(subscription.key())}
+        celebrity_key = db.Key(celebrity_id)
+        stalker_key = db.Key(stalker_id)
+        subscription = Subscription(celebrity=celebrity_key, stalker=stalker_key)
+        subscription.put()
+        result = {'subscription_id':str(subscription.key())}
 
     return HttpResponse(simplejson.dumps(result), mimetype="text/json")
 
@@ -145,18 +148,19 @@ def follow_view(request):
 def unfollow_view(request):
     result = ''
     
-    json_data = simplejson.loads(request.raw_post_data)
-    stalker_id = json_data['username']
-    celebrity_id = json_data['celebrity_id']
+    if request.method == 'POST':
+        json_data = simplejson.loads(request.raw_post_data)
+        stalker_id = json_data['user_id']
+        celebrity_id = json_data['celebrity_id']
     
-    celebrity_key = db.Key(celebrity_id)
-    stalker_key = db.Key(stalker_id)
-    subscription = Subscription.all().filter('celebrity', celebrity_key).filter('stalker', stalker_key).fetch(1)
-    if len(subscription) == 1:
-        subscription[0].delete()
-        result = {'status':'success'}
-    else:
-        result = {'status':'failure'}
+        celebrity_key = db.Key(celebrity_id)
+        stalker_key = db.Key(stalker_id)
+        subscription = Subscription.all().filter('celebrity', celebrity_key).filter('stalker', stalker_key).fetch(1)
+        if len(subscription) == 1:
+            subscription[0].delete()
+            result = {'status':'success'}
+        else:
+            result = {'status':'failure'}
 
     return HttpResponse(simplejson.dumps(result), mimetype="text/json")
 
@@ -170,7 +174,10 @@ def personal_list_view(request, userid):
         spottings = Spotting.all().filter('celebrity',subscription.celebrity.key()).order('-date').fetch(25)
         for spotting in spottings:
             date_string = spotting.date.strftime("%Y-%m-%dT%H-%M-%S")
-            result.append({'spotting_id':str(spotting.key()), 'celebrity_id': str(spotting.celebrity.key()), 'celebrity_name': spotting.celebrity.name, 'location':spotting.location, 'comment':spotting.comment, 'date':date_string})    
+            location_name = spotting.location_name
+            if location_name is None:
+                location_name = _resolve_location(spotting.location)
+            result.append({'spotting_id':str(spotting.key()), 'celebrity_id': str(spotting.celebrity.key()), 'celebrity_name': spotting.celebrity.name, 'location':location_name, 'comment':spotting.comment, 'date':date_string})    
 
     return HttpResponse(simplejson.dumps(result), mimetype="text/json")
 
@@ -180,7 +187,11 @@ def global_list_view(request):
 
     spottings = Spotting.all().order('-date').fetch(25)
     for spotting in spottings:
-        result.append({'spottingid':str(spotting.key()), 'celebrityid':str(spotting.celebrity.key()), 'celebrityname':spotting.celebrity.name, 'location':spotting.location, 'comment':spotting.comment})    
+        date_string = spotting.date.strftime("%Y-%m-%dT%H-%M-%S")
+        location_name = spotting.location_name
+        if location_name is None:
+            location_name = _resolve_location(spotting.location)
+        result.append({'spotting_id':str(spotting.key()), 'celebrity_id':str(spotting.celebrity.key()), 'celebrity_name':spotting.celebrity.name, 'location':location_name, 'comment':spotting.comment, 'date':date_string})    
     
     return HttpResponse(simplejson.dumps(result), mimetype="text/json")
 
@@ -236,3 +247,16 @@ def spotting_view(request):
 
 def mainpage(request):
     return render_to_response('index.html')
+
+def _resolve_location(location_id):
+    
+    file = urllib2.urlopen('https://api.foursquare.com/v2/venues/' + location_id + "?" + FOURSQUARE_CRED, None)
+    try:
+        response = simplejson.loads(file.read())
+        venue_name = response['response']['venue']['name']
+    finally:
+        file.close()
+    return venue_name
+    
+    
+     
